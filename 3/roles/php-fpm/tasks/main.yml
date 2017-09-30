@@ -1,0 +1,21 @@
+- block:
+  - name: Instalacja php-fpm
+    yum:
+      name: php-fpm
+      state: present
+
+  - name: Uruchamianie php-fpm
+    service:
+      name: php-fpm
+      state: started
+      enabled: True
+
+  - name: wgrywanie konfiguracji
+    copy:
+      src: app1.conf
+      dest: /etc/php-fpm.d/
+    notify:
+    - restart_php-fpm
+
+  become: True
+  become_user: root
