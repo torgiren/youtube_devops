@@ -1,9 +1,4 @@
 - block:
-  - name: Instalacja epel-a
-    yum:
-      name: epel-release
-      state: present
-
   - name: instalacja selinux-python
     yum:
       name: libselinux-python
@@ -13,10 +8,6 @@
     yum:
       name: nginx
       state: present
-
-  - selinux:
-      policy: targeted
-      state: permissive
 
   - name: Tworzenie katalogu na aplikacje
     file:

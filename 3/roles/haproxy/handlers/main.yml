@@ -1,0 +1,7 @@
+- name: restart_haproxy
+  service:
+    name: haproxy
+    state: restarted
+
+  become: True
+  become_user: root

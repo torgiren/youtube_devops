@@ -1,0 +1,13 @@
+- block:
+  - name: instalacja epel
+    yum:
+      name: epel-release
+      state: present
+
+  - selinux:
+      policy: targeted
+      state: permissive
+
+  become: True
+  become_user: root
+

@@ -1,0 +1,21 @@
+- block:
+  - name: Instalacja haproxy
+    yum:
+      name: haproxy
+      state: present
+
+  - name: Uruchamianie haproxy
+    service:
+      name: haproxy
+      state: started
+      enabled: True
+
+  - name: Wgrywanie konfiguracji
+    copy:
+      src: haproxy.cfg
+      dest: /etc/haproxy/
+    notify:
+    - restart_haproxy
+
+  become: True
+  become_user: root
