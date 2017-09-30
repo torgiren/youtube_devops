@@ -1,0 +1,5 @@
+- hosts:
+  - www1
+
+  roles:
+  - nginx

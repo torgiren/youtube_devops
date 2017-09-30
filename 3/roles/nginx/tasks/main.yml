@@ -1,0 +1,48 @@
+- block:
+  - name: Instalacja epel-a
+    yum:
+      name: epel-release
+      state: present
+
+  - name: instalacja selinux-python
+    yum:
+      name: libselinux-python
+      state: present
+  
+  - name: Instalacja nginx
+    yum:
+      name: nginx
+      state: present
+
+  - selinux:
+      policy: targeted
+      state: permissive
+
+  - name: Tworzenie katalogu na aplikacje
+    file:
+      path: /var/www/app1
+      state: directory
+
+  - name: Wgrywanie aplikacji
+    copy:
+      src: "{{item}}"
+      dest: /var/www/app1/
+    with_items:
+    - index.html
+    - aa.php
+
+  - name: Uruchamianie nginx
+    service:
+      name: nginx
+      state: started
+      enabled: True
+
+  - name: wgrywanie konfiguracji
+    copy:
+      src: app1.conf
+      dest: /etc/nginx/conf.d/app1.conf
+    notify:
+    - restart_nginx
+
+  become: True
+  become_user: root

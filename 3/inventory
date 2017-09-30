@@ -1,0 +1,12 @@
+lb
+backend1
+www1
+
+[balancer]
+lb
+
+[www]
+www1
+
+[backend]
+backend1
