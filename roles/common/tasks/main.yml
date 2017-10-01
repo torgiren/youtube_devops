@@ -4,9 +4,14 @@
       name: epel-release
       state: present
 
-  - selinux:
-      policy: targeted
-      state: permissive
+  - name: instalacja policycoreutils
+    yum:
+      name: policycoreutils-python
+      state: present
+
+#  - selinux:
+#      policy: targeted
+#      state: enforcing
 
   become: True
   become_user: root

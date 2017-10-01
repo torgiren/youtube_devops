@@ -9,18 +9,12 @@
       name: nginx
       state: present
 
-  - name: Tworzenie katalogu na aplikacje
-    file:
-      path: /var/www/app1
-      state: directory
-
-  - name: Wgrywanie aplikacji
-    copy:
-      src: "{{item}}"
-      dest: /var/www/app1/
-    with_items:
-    - index.html
-    - aa.php
+  - name: Dodawanie portu do php do selinuxa
+    seport:
+      ports: 9005
+      proto: tcp
+      setype: http_port_t
+      state: present
 
   - name: Uruchamianie nginx
     service:

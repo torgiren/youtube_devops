@@ -3,6 +3,15 @@
     yum:
       name: php-fpm
       state: present
+  
+  - name: Dodawanie portu 9005 do selinuxa
+    seport:
+      ports: 9005
+      proto: tcp
+      setype: http_port_t
+      state: present
+    notify:
+    - restart_php-fpm
 
   - name: Uruchamianie php-fpm
     service:

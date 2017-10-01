@@ -1,0 +1,16 @@
+- block:
+  - name: Tworzenie katalogu na aplikacje
+    file:
+      path: /var/www/app1
+      state: directory
+
+  - name: Wgrywanie aplikacji
+    copy:
+      src: "{{item}}"
+      dest: /var/www/app1/
+    with_items:
+    - index.html
+    - aa.php
+
+  become: True
+  become_user: root

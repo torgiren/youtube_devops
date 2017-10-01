@@ -4,6 +4,15 @@
       name: haproxy
       state: present
 
+  - name: Dodawanie portu do selinuxa
+    seport:
+      ports: 8001
+      proto: tcp
+      setype: http_port_t
+      state: present
+    notify:
+    - restart_haproxy
+
   - name: Uruchamianie haproxy
     service:
       name: haproxy
