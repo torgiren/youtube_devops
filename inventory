@@ -6,7 +6,26 @@ www1
 lb
 
 [www]
-www1
+#www1
 
 [backend]
 backend1
+
+[app1:children]
+app1_backend
+app1_frontend
+
+[app1_backend]
+backend1
+www1
+
+
+[app1_frontend]
+www1
+
+[app2:children]
+app2_frontend
+app2_backend
+
+[app2_frontend]
+www1

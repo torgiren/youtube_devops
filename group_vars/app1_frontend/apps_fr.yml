@@ -1,0 +1,7 @@
+apps_fro:
+  app1:
+    www:
+      app:
+        source: git
+        url: "git://xx@xx.ru/app1"
+      root: "/var/www/app1"

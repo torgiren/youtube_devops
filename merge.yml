@@ -1,0 +1,5 @@
+- hosts:
+  - app1
+
+  roles:
+  - vars_merger

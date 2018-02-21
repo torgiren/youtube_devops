@@ -1,0 +1,14 @@
+apps:
+  app1:
+    url: "app1.fabrykowski.loc"
+    port: 8001
+    www:
+      app:
+        source: git
+        url: git://XXXXXX
+      root: "/var/www/app1"
+    fpm:
+      port: 9001
+      app:
+        source: git
+        url: git://YYYYYY

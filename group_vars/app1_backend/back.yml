@@ -1,0 +1,7 @@
+apps_app1_back:
+  app1:
+    fpm:
+      port: 9001
+      app:
+        source: git
+        url: "git://xx@xx.ru/app1" 

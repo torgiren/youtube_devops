@@ -1,0 +1,4 @@
+apps_app1_general:
+  app1:
+    url: "app1.fabrykowski.pl"
+    port: 8001

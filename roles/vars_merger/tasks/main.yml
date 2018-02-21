@@ -1,0 +1,15 @@
+- name: sprawdzanie czy zmienne nie sa zdefiniowane
+  assert:
+    that: apps is not defined
+
+- name: hostvars
+  set_fact:
+    apps: "{{apps|default({}) | combine(hostvars[inventory_hostname][item], recursive=True)}}"
+  with_items:
+  - "{{hostvars[inventory_hostname]|list}}"
+  when: item.startswith('apps_')
+
+
+- name: debug apps
+  debug:
+    msg: "{{apps}}"

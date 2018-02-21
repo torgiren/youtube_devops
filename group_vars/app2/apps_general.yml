@@ -1,0 +1,4 @@
+apps_app2_general:
+  app2:
+    url: "app2.fabrykowski.pl"
+    port: 8002
