@@ -4,12 +4,20 @@
       name: haproxy
       state: present
 
-  - name: Dodawanie portu do selinuxa
+  - name: Dodawanie portow do selinuxa
     seport:
-      ports: 8001
+      ports: "{{item.value.listen_port}}"
       proto: tcp
       setype: http_port_t
       state: present
+    notify:
+    - restart_haproxy
+    with_dict: "{{apps}}"
+
+  - name: Wgrywanie konfiguracji
+    template:
+      src: haproxy.cfg
+      dest: /etc/haproxy/
     notify:
     - restart_haproxy
 
@@ -19,12 +27,6 @@
       state: started
       enabled: True
 
-  - name: Wgrywanie konfiguracji
-    copy:
-      src: haproxy.cfg
-      dest: /etc/haproxy/
-    notify:
-    - restart_haproxy
 
   become: True
   become_user: root
