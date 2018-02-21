@@ -1,9 +1,4 @@
 - block:
-  - name: Tworzenie katalogu na aplikacje
-    file:
-      path: /var/www/app1
-      state: directory
-
   - name: Wgrywanie aplikacji
     copy:
       src: "{{item}}"

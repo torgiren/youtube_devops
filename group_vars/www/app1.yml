@@ -1,0 +1,13 @@
+apps:
+  app1:
+    server_name: "app1.fabrykowski.loc"
+    root: "/var/www/app1"
+    fcgi_port: 9005
+    fcgi_hosts:
+    - "192.168.121.253"
+  app2:
+    server_name: "app2.fabrykowski.loc"
+    root: "/var/www/app2"
+    fcgi_port: 9006
+    fcgi_hosts:
+    - "192.168.121.253"

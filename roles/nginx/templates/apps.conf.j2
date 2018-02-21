@@ -1,15 +1,19 @@
+{% for app in apps %}
 server {
     listen      80;
-    server_name app1.fabrykowski.loc;
-    root        /var/www/app1;
+    server_name {{apps[app]['server_name']}};
+    root        {{apps[app]['root']}};
 
     location / {
     }
     location ~ \.php$ {
         try_files $uri =404;
-        fastcgi_pass 192.168.121.253:9005;
+        fastcgi_pass {% for host in apps[app]['fcgi_hosts'] %} {{host}}:{{apps[app]['fcgi_port']}} {% endfor %};
+
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
     }
 }
+
+{% endfor %}

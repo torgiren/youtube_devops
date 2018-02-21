@@ -11,10 +11,24 @@
 
   - name: Dodawanie portu do php do selinuxa
     seport:
-      ports: 9005
+      ports: "{{item.value.fcgi_port}}"
       proto: tcp
       setype: http_port_t
       state: present
+    with_dict: "{{apps}}"
+
+  - name: wgrywanie konfiguracji
+    template:
+      src: apps.conf.j2
+      dest: /etc/nginx/conf.d/apps.conf
+    notify:
+    - restart_nginx
+
+  - name: tworzenie katalogow na document root
+    file:
+      path: "{{item.value.root}}"
+      state: directory
+    with_dict: "{{apps}}"
 
   - name: Uruchamianie nginx
     service:
@@ -22,12 +36,6 @@
       state: started
       enabled: True
 
-  - name: wgrywanie konfiguracji
-    copy:
-      src: app1.conf
-      dest: /etc/nginx/conf.d/app1.conf
-    notify:
-    - restart_nginx
 
   become: True
   become_user: root
