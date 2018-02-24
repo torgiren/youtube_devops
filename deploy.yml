@@ -1,0 +1,6 @@
+- hosts:
+  - backend1
+
+  roles:
+  - vars_merger
+  - php-fpm

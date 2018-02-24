@@ -1,8 +1,0 @@
-apps:
-  app1:
-    fcgi_port: 9005
-    root: "/var/www/app1"
-
-  app2:
-    fcgi_port: 9006
-    root: "/var/www/app2"

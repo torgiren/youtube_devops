@@ -6,7 +6,7 @@
   
   - name: Dodawanie portow do selinuxa
     seport:
-      ports: "{{item.value.fcgi_port}}"
+      ports: "{{item.value.fpm.port}}"
       proto: tcp
       setype: http_port_t
       state: present
@@ -30,3 +30,11 @@
 
   become: True
   become_user: root
+
+- include_role:
+    name: app_deploy
+  vars:
+    app: "{{item.value.fpm.app|combine({'name': item.key, 'dest': '/var/www/'})}}"
+  with_dict: "{{apps}}"
+  when: item.value.fpm is defined
+

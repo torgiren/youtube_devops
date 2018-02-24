@@ -1,0 +1,49 @@
+- name: jestem deployem
+  debug:
+    msg: "jestem deployem"
+
+- name: app
+  debug:
+    msg: "{{app}}"
+
+- name: tworzenie katalogu na tymczasowa aplikacje
+  file:
+    path: /tmp/apps_tmp
+    state: directory
+  delegate_to: 127.0.0.1
+  run_once: True
+
+- name: pobieranie aplikacji
+  git:
+    repo: "{{app.url}}"
+    dest: "/tmp/apps_tmp/{{app.name}}"
+  delegate_to: 127.0.0.1
+
+- name: tworzenie katalogu na tymczasowa aplikacje 2
+  file:
+    path: /tmp/apps_tmp
+    state: directory
+
+- name: wgrywanie apliakcji do tmp 1
+  synchronize:
+    src: "/tmp/apps_tmp/{{app.name}}"
+    dest: "/tmp/apps_tmp/"
+    rsync_opts:
+    - "--exclude=.git"
+
+- name: wgrywanie aplikacji
+  synchronize:
+    src: "/tmp/apps_tmp/{{app.name}}"
+    dest: "{{app.dest}}"
+    owner: no
+    group: no 
+  delegate_to: "{{inventory_hostname}}"
+  become: True
+
+- name: poprawianie chmodow
+  file:
+    path: "{{app.dest}}"
+    state: directory
+    setype: "httpd_sys_content_t"
+    recurse: True
+  become: True
