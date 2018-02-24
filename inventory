@@ -25,7 +25,7 @@ www1
 
 [app2:children]
 app2_frontend
-app2_backend
+#app2_backend
 
 [app2_frontend]
 www1
