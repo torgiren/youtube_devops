@@ -4,4 +4,4 @@ apps_app1_back:
       port: 9001
       app:
         source: git
-        url: "ssh://git@127.0.0.1/app1_backend"
+        url: "ssh://git@192.168.121.92/app1_backend"
