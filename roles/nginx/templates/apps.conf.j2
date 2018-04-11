@@ -1,15 +1,26 @@
 {% for app in apps %}
+
+upstream {{app}}_upstream {
+{% for host in groups['all'] %}
+{%  if 'apps' in hostvars[host] %}
+{%      if app in hostvars[host]['apps'] %}
+{%          if 'fpm' in hostvars[host]['apps'][app] %}
+    server {{ host}}:{{hostvars[host]['apps'][app]['fpm']['port'] }};
+{%          endif %}
+{%      endif %}
+{%  endif %}
+{% endfor %}
+}
 server {
     listen      80;
-    server_name {{apps[app]['server_name']}};
-    root        {{apps[app]['root']}};
+    server_name {{apps[app]['url']}};
+    root        /var/www/{{app}};
 
     location / {
     }
     location ~ \.php$ {
         try_files $uri =404;
-        fastcgi_pass {% for host in apps[app]['fcgi_hosts'] %} {{host}}:{{apps[app]['fcgi_port']}} {% endfor %};
-
+        fastcgi_pass {{app}}_upstream;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;

@@ -3,5 +3,5 @@ apps_fro:
     www:
       app:
         source: git
-        url: "git://git@127.0.0.1:app1_frontend"
+        url: "ssh://git@127.0.0.1/app1_frontend"
       root: "/var/www/app1"

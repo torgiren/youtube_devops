@@ -1,0 +1,7 @@
+apps_app2_back:
+  app2:
+    fpm:
+      port: 9002
+      app:
+        source: git
+        url: "ssh://git@192.168.121.92/app1_backend"

@@ -5,8 +5,9 @@ www1
 [balancer]
 lb
 
-[www]
-#www1
+[www:children]
+app1_frontend
+app2_frontend
 
 [backend]
 backend1
@@ -20,6 +21,7 @@ backend1
 www1
 
 
+
 [app1_frontend]
 www1
 
@@ -29,3 +31,6 @@ app2_frontend
 
 [app2_frontend]
 www1
+
+[app2_backend]
+backend1

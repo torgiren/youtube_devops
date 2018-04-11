@@ -1,6 +1,10 @@
 - hosts:
-  - www1
+  - all
+  gather_facts: false
+  roles:
+  - vars_merger
 
+- hosts:
+  - www
   roles:
   - nginx
-  - app1

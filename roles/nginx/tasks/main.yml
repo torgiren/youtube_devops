@@ -11,11 +11,14 @@
 
   - name: Dodawanie portu do php do selinuxa
     seport:
-      ports: "{{item.value.fcgi_port}}"
+      ports: "{{ (((hostvars[item.0]['apps']|default({}))[item.1]|default({}))['fpm']|default({}) )['port']}}"
       proto: tcp
       setype: http_port_t
       state: present
-    with_dict: "{{apps}}"
+    when: (((hostvars[item.0]['apps']|default({}))[item.1]|default({}))['fpm']|default({}) )['port']|default(0)
+    with_nested:
+    - "{{groups['all']}}"
+    - "{{apps|list}}"
 
   - name: wgrywanie konfiguracji
     template:
@@ -26,7 +29,7 @@
 
   - name: tworzenie katalogow na document root
     file:
-      path: "{{item.value.root}}"
+      path: "/var/www/{{item.key}}"
       state: directory
     with_dict: "{{apps}}"
 
@@ -39,3 +42,10 @@
 
   become: True
   become_user: root
+
+- include_role:
+    name: app_deploy
+  vars:
+   app: "{{item.value.www.app|combine({'name': item.key, 'dest': '/var/www/'})}}"
+  with_dict: "{{apps}}"
+  when: item.value.www is defined
